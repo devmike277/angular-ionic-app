@@ -1,3 +1,4 @@
+import { ErrorMessageModule } from './../../components/error-message/error-message.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,8 +14,11 @@ import { RegisterPage } from './register.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RegisterPageRoutingModule
+    RegisterPageRoutingModule,
+    ErrorMessageModule
   ],
-  declarations: [RegisterPage]
+  declarations: [
+    RegisterPage
+  ]
 })
 export class RegisterPageModule {}
