@@ -52,7 +52,7 @@ describe('LoginPage', () => {
     component.ngOnInit();
     expect(component.form).not.toBeUndefined();
   });
-
+  //not necessary
   // it('should go to home on login page', () => {
   //   spyOn(router,'navigate');
   //   component.login();
