@@ -1,5 +1,7 @@
-import { AuthService } from './../../services/auth/auth.service';
-import { login, recoverPassword, recoverPasswordFail, recoverPasswordSucces, loginSuccess, loginFail } from './../../../store/login/login.actions';
+//ngrx refactor
+//import { AuthService } from './../../services/auth/auth.service';
+//import { login, recoverPassword, recoverPasswordFail, recoverPasswordSucces, loginSuccess, loginFail } from './../../../store/login/login.actions';
+import { login, recoverPassword } from './../../../store/login/login.actions';
 import { AppState } from './../../../store/AppState';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -26,15 +28,17 @@ export class LoginPage implements OnInit, OnDestroy {
           private formBuilder: FormBuilder,
           private store: Store<AppState>,
           private toastController: ToastController,
-          private authService: AuthService
+          //ngrx refactor
+          //private authService: AuthService
           ) { }
 
   ngOnInit() {
     this.form = new LoginPageForm(this.formBuilder).createForm();
     this.loginStateSubscription = this.store.select('login').subscribe( loginState => {
       this.onIsRecoveredPassword(loginState);
-      this.onIsRecoveringPassword(loginState);
-      this.onIsLoggingIn(loginState);
+      //ngrx refactor
+      // this.onIsRecoveringPassword(loginState);
+      // this.onIsLoggingIn(loginState);
       this.onIsLoggedIn(loginState);
       this.onError(loginState);
       this.toggleLoading(loginState);
@@ -54,35 +58,35 @@ export class LoginPage implements OnInit, OnDestroy {
       this.store.dispatch(hide());
     }
   }
-
-  private onIsLoggingIn(loginState: LoginState){
-    if(loginState.isLoggingIn){
-      const email = this.form.get('email').value;
-      const password = this.form.get('password').value;
-      this.authService.login(email,password).subscribe( user => {
-        this.store.dispatch(loginSuccess({user}));
-      },error => {
-        this.store.dispatch(loginFail({error}));
-      });
-    }
-  }
+  //ngrx refactor
+  // private onIsLoggingIn(loginState: LoginState){
+  //   if(loginState.isLoggingIn){
+  //     const email = this.form.get('email').value;
+  //     const password = this.form.get('password').value;
+  //     this.authService.login(email,password).subscribe( user => {
+  //       this.store.dispatch(loginSuccess({user}));
+  //     },error => {
+  //       this.store.dispatch(loginFail({error}));
+  //     });
+  //   }
+  // }
 
   private onIsLoggedIn(loginState: LoginState){
     if(loginState.isLoggedIn){
       this.router.navigate(['home']);
     }
   }
+  //ngrx refactor
+  // private onIsRecoveringPassword(loginState: LoginState){
+  //   if(loginState.isRecoveringPassword){
+  //     this.authService.recoverEmailPassword(this.form.get('email').value).subscribe( () => {
+  //       this.store.dispatch(recoverPasswordSucces());
+  //     },error => {
+  //       this.store.dispatch(recoverPasswordFail({error}));
+  //     });
+  //   }
 
-  private onIsRecoveringPassword(loginState: LoginState){
-    if(loginState.isRecoveringPassword){
-      this.authService.recoverEmailPassword(this.form.get('email').value).subscribe( () => {
-        this.store.dispatch(recoverPasswordSucces());
-      },error => {
-        this.store.dispatch(recoverPasswordFail({error}));
-      });
-    }
-
-  }
+  // }
 
   private async onIsRecoveredPassword(loginState: LoginState){
     if(loginState.isRecoveredPassword){
@@ -108,11 +112,11 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   forgotEmailPassword(){
-    this.store.dispatch(recoverPassword());
+    this.store.dispatch(recoverPassword({email: this.form.get('email').value}));
   }
 
   login(){
-    this.store.dispatch(login());
+    this.store.dispatch(login({email: this.form.get('email').value, password: this.form.get('password').value}));
   }
 
   register(){
