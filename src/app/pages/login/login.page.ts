@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { LoginPageForm } from './login.page.form';
 import { hide, show } from 'src/store/loading/loading.actions';
 import { Store } from '@ngrx/store';
-import { ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { LoginState } from 'src/store/login/LoginState';
 import { Subscription } from 'rxjs';
 
@@ -28,6 +28,7 @@ export class LoginPage implements OnInit, OnDestroy {
           private formBuilder: FormBuilder,
           private store: Store<AppState>,
           private toastController: ToastController,
+          private navController: NavController
           //ngrx refactor
           //private authService: AuthService
           ) { }
@@ -73,7 +74,8 @@ export class LoginPage implements OnInit, OnDestroy {
 
   private onIsLoggedIn(loginState: LoginState){
     if(loginState.isLoggedIn){
-      this.router.navigate(['home']);
+      //this.router.navigate(['home']);
+      this.navController.navigateRoot('home');
     }
   }
   //ngrx refactor

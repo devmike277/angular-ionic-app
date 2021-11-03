@@ -1,7 +1,7 @@
 import { ErrorMessageModule } from './../../components/error-message/error-message.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -15,6 +15,8 @@ import { RegisterPage } from './register.page';
     FormsModule,
     IonicModule,
     RegisterPageRoutingModule,
+    ErrorMessageModule,
+    ReactiveFormsModule,
     ErrorMessageModule
   ],
   declarations: [

@@ -11,5 +11,10 @@ export const AppInitialState: AppState = {
     isRecoveringPassword: false,
     isRecoveredPassword: false,
 
+  },
+  register: {
+    error: null,
+    isRegistered: false,
+    isRegistering: false
   }
 }
